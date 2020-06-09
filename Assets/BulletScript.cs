@@ -11,8 +11,10 @@ public class BulletScript : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Debug.Log("Pressed primary button.");
+            
             transform.position = new Vector3(playerBody.transform.position.x, 1, playerBody.transform.position.z + bulletOffset);
             transform.eulerAngles = new Vector3(0, playerBody.transform.eulerAngles.y, 0);
+            gameObject.SetActive(true);
             InvokeRepeating("MoveBullet", 0.0f, 0.01f);
         }
     }
@@ -21,4 +23,11 @@ public class BulletScript : MonoBehaviour
     {
         transform.Translate(0, 0, bulletSpeed * Time.deltaTime);
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        Debug.Log("Bullet collided");
+       // gameObject.SetActive(false);
+    }
+
 }

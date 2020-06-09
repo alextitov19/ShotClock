@@ -3,7 +3,6 @@
 public class BotScript : MonoBehaviour
 {
     public Transform player;
-
     public int movementSpeed;
     void Update()
     {
@@ -19,6 +18,7 @@ public class BotScript : MonoBehaviour
         if (collision.gameObject.tag == "Bullet")
         {
             Debug.Log("Bot collided with bullet");
+            gameObject.SetActive(false);
         }
 
         if (collision.gameObject.tag == "Player")
