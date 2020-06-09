@@ -603,6 +603,8 @@ GameObject:
   - component: {fileID: 1174169866}
   - component: {fileID: 1174169865}
   - component: {fileID: 1174169868}
+  - component: {fileID: 1174169864}
+  - component: {fileID: 1174169869}
   m_Layer: 0
   m_Name: Bullet
   m_TagString: Untagged
@@ -610,6 +612,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!65 &1174169864
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1174169863}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &1174169865
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -687,6 +702,21 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &1174169869
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1174169863}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30ba2639fd490964a9cea11d603b3596, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerBody: {fileID: 2063749747}
+  bulletSpeed: 20
+  bulletOffset: 0.85
 --- !u!1 &1788760094
 GameObject:
   m_ObjectHideFlags: 0
@@ -721,6 +751,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 2063749746}
+  bullet: {fileID: 1174169868}
   movementSpeed: 1
 --- !u!65 &1788760096
 BoxCollider:
@@ -846,10 +877,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerBody: {fileID: 2063749747}
-  bulletBody: {fileID: 1174169868}
   movementVector: {x: 5, y: 5, z: 5}
   rotationSpeed: 75
-  bulletSpeed: 1
 --- !u!65 &2063749743
 BoxCollider:
   m_ObjectHideFlags: 0

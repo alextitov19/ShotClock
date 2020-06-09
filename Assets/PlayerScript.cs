@@ -1,12 +1,11 @@
 ﻿using UnityEngine;
 
-public class Gameplay : MonoBehaviour
+public class PlayerScript : MonoBehaviour
 {
     public Rigidbody playerBody;
-    public Rigidbody bulletBody;
     public Vector3 movementVector;
     public float rotationSpeed;
-    public float bulletSpeed;
+  
         
     void Update()
     {
@@ -32,21 +31,6 @@ public class Gameplay : MonoBehaviour
             playerBody.transform.Translate(0, 0, -movementVector.z * Time.deltaTime);
         }
 
-        
-
-        if (Input.GetMouseButtonDown(0))
-        {
-            Debug.Log("Pressed primary button.");
-            bulletBody.transform.position = new Vector3(playerBody.transform.position.x, 1, playerBody.transform.position.z);
-            bulletBody.transform.eulerAngles = new Vector3(0, playerBody.transform.eulerAngles.y, 0);
-            InvokeRepeating("moveBullet", 0.0f, 0.01f);
-        }
-
-
     }
 
-    void moveBullet()
-    {
-        bulletBody.transform.Translate(0, 0, bulletSpeed * Time.deltaTime);
-    }
 }

@@ -1,10 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class BotMovement : MonoBehaviour
+public class BotScript : MonoBehaviour
 {
     public Transform player;
+    public Rigidbody bullet;
     public int movementSpeed;
     void Update()
     {
