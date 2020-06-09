@@ -33,4 +33,12 @@ public class PlayerScript : MonoBehaviour
 
     }
 
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Bot")
+        {
+            Debug.Log("Player collided with bot");
+        }
+    }
+
 }
