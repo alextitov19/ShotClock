@@ -6,7 +6,8 @@ public class PlayerScript : MonoBehaviour
     public Vector3 movementVector;
     public float rotationSpeed;
     public GameObject botPrefab;
-    int counter = 0;
+    int spawnCounter = 0;
+    int amountToSpawn = 1;
 
 
 
@@ -43,9 +44,14 @@ public class PlayerScript : MonoBehaviour
 
     private void SpawnBot()
     {
-        if (++counter == 5) CancelInvoke("SpawnBot");
-        Instantiate(botPrefab, new Vector3(0, 1.1f, 0), Quaternion.identity);
+        if (++spawnCounter == 5) CancelInvoke("SpawnBot");
+        for (int i = 0; i <= amountToSpawn; i++)
+        {
+            Instantiate(botPrefab, new Vector3(Random.Range(18.0f, 23.0f) * RandomSign(), 1.1f, Random.Range(18.0f, 23.0f) * RandomSign()), Quaternion.identity);
+        }
+        amountToSpawn++;
     }
+        
 
     private void OnCollisionEnter(Collision collision)
     {
@@ -53,6 +59,15 @@ public class PlayerScript : MonoBehaviour
         {
             Debug.Log("Player collided with bot");
         }
+    }
+
+    private int RandomSign()
+    {
+        if (Random.Range(0, 2) == 0)
+        {
+            return -1;
+        }
+        return 1;
     }
 
 }
