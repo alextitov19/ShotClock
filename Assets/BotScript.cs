@@ -2,15 +2,21 @@
 
 public class BotScript : MonoBehaviour
 {
-    public Transform player;
+    static GameObject player;
+    Transform playerTransform;
     public int movementSpeed;
+
+
+    private void Start()
+    {
+        player = GameObject.Find("Player");
+        playerTransform = player.transform;
+    }
     void Update()
     {
-        transform.LookAt(player);
+        playerTransform = player.transform;
+        transform.LookAt(playerTransform);
         transform.Translate(0, 0, movementSpeed * Time.deltaTime);
-
-        
-        
     }
 
     private void OnCollisionEnter(Collision collision)

@@ -5,8 +5,16 @@ public class PlayerScript : MonoBehaviour
     public Rigidbody playerBody;
     public Vector3 movementVector;
     public float rotationSpeed;
-  
-        
+    public GameObject botPrefab;
+    int counter = 0;
+
+
+
+    private void Start()
+    {
+        InvokeRepeating("SpawnBot", 5.0f, 10.0f);
+    }
+
     void Update()
     {
         playerBody.transform.Rotate(0, Input.GetAxis("Mouse X") * Time.deltaTime * rotationSpeed, 0);
@@ -31,6 +39,12 @@ public class PlayerScript : MonoBehaviour
             playerBody.transform.Translate(0, 0, -movementVector.z * Time.deltaTime);
         }
 
+    }
+
+    private void SpawnBot()
+    {
+        if (++counter == 5) CancelInvoke("SpawnBot");
+        Instantiate(botPrefab, new Vector3(0, 1.1f, 0), Quaternion.identity);
     }
 
     private void OnCollisionEnter(Collision collision)
