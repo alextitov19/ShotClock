@@ -45,7 +45,7 @@ public class PlayerScript : MonoBehaviour
     private void SpawnBot()
     {
         if (++spawnCounter == 5) CancelInvoke("SpawnBot");
-        for (int i = 0; i <= amountToSpawn; i++)
+        for (int i = 1; i <= amountToSpawn; i++)
         {
             Instantiate(botPrefab, new Vector3(Random.Range(18.0f, 23.0f) * RandomSign(), 1.1f, Random.Range(18.0f, 23.0f) * RandomSign()), Quaternion.identity);
         }
