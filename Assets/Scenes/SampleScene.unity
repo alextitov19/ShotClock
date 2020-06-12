@@ -753,7 +753,7 @@ MonoBehaviour:
   playerBody: {fileID: 2063749747}
   movementVector: {x: 5, y: 5, z: 5}
   rotationSpeed: 75
-  botPrefab: {fileID: 6266888897888808294, guid: 48139a3bbe942104ab9b814dd6727c24,
+  botPrefab: {fileID: 633285558119025768, guid: 1a6e8d46dffb2ca45b6022f79822a767,
     type: 3}
 --- !u!65 &2063749743
 BoxCollider:
