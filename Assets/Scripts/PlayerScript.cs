@@ -8,6 +8,10 @@ public class PlayerScript : MonoBehaviour
     public GameObject botPrefab;
     int spawnCounter = 0;
     int amountToSpawn = 1;
+    public Camera myCamera;
+    public float fireRate;
+    public float weaponRange;
+    private float nextFire;
 
 
 
@@ -38,6 +42,20 @@ public class PlayerScript : MonoBehaviour
         if (Input.GetKey("s"))
         {
             playerBody.transform.Translate(0, 0, -movementVector.z * Time.deltaTime);
+        }
+
+        if (Input.GetMouseButtonDown(0) && Time.time > nextFire)
+        {
+            Debug.Log("Pressed primary button.");
+            nextFire = Time.time + fireRate;
+            Vector3 rayOrigin = myCamera.ViewportToWorldPoint(new Vector3(0.5f, 0.5f, 0.0f));
+            RaycastHit hit;
+
+            if (Physics.Raycast(rayOrigin, myCamera.transform.forward, out hit, weaponRange))
+            {
+                hit.rigidbody.gameObject.SetActive(false);
+            }
+
         }
 
     }
