@@ -17,6 +17,7 @@ public class PlayerScript : MonoBehaviour
 
     private void Start()
     {
+        Cursor.visible = false;
         InvokeRepeating("SpawnBot", 5.0f, 10.0f);
     }
 
@@ -57,6 +58,11 @@ public class PlayerScript : MonoBehaviour
             }
 
         }
+
+        if (Input.GetKey(KeyCode.Escape))
+            Screen.lockCursor = false;
+        else
+            Screen.lockCursor = true;
 
     }
 
