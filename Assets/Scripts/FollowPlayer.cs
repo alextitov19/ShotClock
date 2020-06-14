@@ -6,6 +6,11 @@ public class FollowPlayer : MonoBehaviour
     public Vector3 offset;
     public Vector3 rotationSpeed;
 
+    private void Start()
+    {
+        transform.rotation = player.rotation;
+    }
+
     void Update()
     {
         
