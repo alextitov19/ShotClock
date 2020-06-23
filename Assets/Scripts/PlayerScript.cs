@@ -3,18 +3,24 @@ using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
 {
-    public Rigidbody playerBody;
     public Vector3 movementVector;
-    public float rotationSpeed;
-    public GameObject botPrefab;
+    
     int spawnCounter = 0;
     int amountToSpawn = 1;
-    public Camera myCamera;
+
     public float fireRate;
     public float weaponRange;
     private float nextFire;
-    public GameObject roomClearedUI;
+    public float rotationSpeed;
+
     private bool roomIsCleared = false;
+
+    public GameObject door1;
+    public GameObject botPrefab;
+    public GameObject roomClearedUI;
+
+    public Rigidbody playerBody;
+    public Camera myCamera;
 
     private void Start()
     {
@@ -29,6 +35,7 @@ public class PlayerScript : MonoBehaviour
         {
             roomIsCleared = true;
             Debug.Log("Entered kC = " + Global.killCounter);
+            door1.SetActive(false);
             StartCoroutine(RoomCleared());
         }
 
