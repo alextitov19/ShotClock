@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -12,8 +13,8 @@ public class PlayerScript : MonoBehaviour
     public float fireRate;
     public float weaponRange;
     private float nextFire;
-
-
+    public GameObject roomClearedUI;
+    private bool roomIsCleared = false;
 
     private void Start()
     {
@@ -23,6 +24,14 @@ public class PlayerScript : MonoBehaviour
 
     void Update()
     {
+
+        if(Global.killCounter == 15 && roomIsCleared == false)
+        {
+            roomIsCleared = true;
+            Debug.Log("Entered kC = " + Global.killCounter);
+            StartCoroutine(RoomCleared());
+        }
+
         playerBody.transform.Rotate(0, Input.GetAxis("Mouse X") * Time.deltaTime * rotationSpeed, 0);
 
         if (Input.GetKey("d"))
@@ -54,7 +63,14 @@ public class PlayerScript : MonoBehaviour
 
             if (Physics.Raycast(rayOrigin, myCamera.transform.forward, out hit, weaponRange))
             {
-                hit.rigidbody.gameObject.SetActive(false);
+                GameObject hitObject = hit.rigidbody.gameObject;
+                if (hitObject.tag == "Bot")
+                {
+                    Debug.Log("Bot killed");
+                    hitObject.SetActive(false);
+                    Global.killCounter++;
+                    Debug.Log("Kill counter = " + Global.killCounter);
+                }
             }
 
         }
@@ -68,7 +84,11 @@ public class PlayerScript : MonoBehaviour
 
     private void SpawnBot()
     {
-        if (++spawnCounter == 5) CancelInvoke("SpawnBot");
+        if (++spawnCounter == 5) 
+        {
+            CancelInvoke("SpawnBot");
+        }
+
         for (int i = 1; i <= amountToSpawn; i++)
         {
             Instantiate(botPrefab, new Vector3(Random.Range(18.0f, 23.0f) * RandomSign(), 1, Random.Range(18.0f, 23.0f) * RandomSign()), Quaternion.identity);
@@ -81,7 +101,7 @@ public class PlayerScript : MonoBehaviour
     {
         if (collision.gameObject.tag == "Bot")
         {
-            Debug.Log("Player collided with bot");
+    //        Debug.Log("Player collided with bot");
         }
     }
 
@@ -92,6 +112,13 @@ public class PlayerScript : MonoBehaviour
             return -1;
         }
         return 1;
+    }
+
+    IEnumerator RoomCleared()
+    {
+        roomClearedUI.SetActive(true);
+        yield return new WaitForSeconds(3);
+        roomClearedUI.SetActive(false);
     }
 
 }

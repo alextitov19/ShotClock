@@ -66,6 +66,7 @@
     <Compile Include="Assets\Scripts\BotScript.cs" />
     <Compile Include="Assets\Scripts\BulletScript.cs" />
     <Compile Include="Assets\Scripts\FollowPlayer.cs" />
+    <Compile Include="Assets\Scripts\Global.cs" />
     <Compile Include="Assets\Scripts\PlayerScript.cs" />
     <None Include="Assets\Skyboxes\SkySerie Freebie\Hdri setup.txt" />
     <Reference Include="UnityEngine">

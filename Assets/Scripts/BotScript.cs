@@ -6,7 +6,6 @@ public class BotScript : MonoBehaviour
     Transform playerTransform;
     public int movementSpeed;
 
-
     private void Start()
     {
         player = GameObject.Find("Player");
@@ -22,15 +21,9 @@ public class BotScript : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Bullet")
-        {
-            Debug.Log("Bot collided with bullet");
-            gameObject.SetActive(false);
-        }
-
         if (collision.gameObject.tag == "Player")
         {
-            Debug.Log("Bot collided with player");
+         //   Debug.Log("Bot collided with player");
         }
     }
 }
