@@ -6,36 +6,45 @@ public class PlayerScript : MonoBehaviour
     public Vector3 movementVector;
     
     int spawnCounter = 0;
-    int amountToSpawn = 1;
+    int amountToSpawn;
 
     public float fireRate;
     public float weaponRange;
     private float nextFire;
     public float rotationSpeed;
 
-    private bool roomIsCleared = false;
-
-    public GameObject door1;
     public GameObject botPrefab;
     public GameObject roomClearedUI;
 
     public Rigidbody playerBody;
     public Camera myCamera;
 
+    private Room currentRoom;
+
     private void Start()
     {
         Cursor.visible = false;
         InvokeRepeating("SpawnBot", 5.0f, 10.0f);
+        Room room1 = new Room();
+        room1.door = GameObject.Find("Door1");
+        room1.totalMobs = 15;
+        room1.mobWaves = 5;
+        room1.initSpawnAmount = 1;
+        room1.mobSpawnPoints = new int[,] {{18, 22}, {18, -22}, {-18, 22}, {-18, -22}};
+
+        amountToSpawn = room1.initSpawnAmount;
+
+        currentRoom = room1;
     }
 
     void Update()
     {
 
-        if(Global.killCounter == 15 && roomIsCleared == false)
+        if(Global.killCounter == currentRoom.totalMobs && currentRoom.isCleared == false)
         {
-            roomIsCleared = true;
+            currentRoom.isCleared = true;
             Debug.Log("Entered kC = " + Global.killCounter);
-            door1.SetActive(false);
+            currentRoom.door.SetActive(false);
             StartCoroutine(RoomCleared());
         }
 
@@ -91,14 +100,16 @@ public class PlayerScript : MonoBehaviour
 
     private void SpawnBot()
     {
-        if (++spawnCounter == 5) 
+        if (++spawnCounter == currentRoom.mobWaves) 
         {
             CancelInvoke("SpawnBot");
         }
 
         for (int i = 1; i <= amountToSpawn; i++)
         {
-            Instantiate(botPrefab, new Vector3(Random.Range(18.0f, 23.0f) * RandomSign(), 1, Random.Range(18.0f, 23.0f) * RandomSign()), Quaternion.identity);
+            int randomPos = Random.Range(0, currentRoom.mobSpawnPoints.GetLength(0));
+            Debug.Log("Random number generated = " + randomPos);
+            Instantiate(botPrefab, new Vector3(currentRoom.mobSpawnPoints[randomPos, 0], 1, currentRoom.mobSpawnPoints[randomPos, 1]), Quaternion.identity);
         }
         amountToSpawn++;
     }
@@ -106,19 +117,16 @@ public class PlayerScript : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Bot")
+        GameObject collidedObject = collision.gameObject;
+        if (collidedObject.tag == "Bot")
         {
     //        Debug.Log("Player collided with bot");
         }
-    }
-
-    private int RandomSign()
-    {
-        if (Random.Range(0, 2) == 0)
+        if (collidedObject.tag == "Doormat") 
         {
-            return -1;
+            int doormatRoom = collidedObject.name[7] - '0';
+            Debug.Log("--Collided with Doormat, current room = " + doormatRoom);
         }
-        return 1;
     }
 
     IEnumerator RoomCleared()
@@ -128,4 +136,12 @@ public class PlayerScript : MonoBehaviour
         roomClearedUI.SetActive(false);
     }
 
+}
+
+class Room
+{
+    public int[,] mobSpawnPoints;
+    public int totalMobs, mobWaves, initSpawnAmount;
+    public GameObject door;
+    public bool isCleared = false;
 }
