@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using System.Xml;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -144,4 +145,18 @@ class Room
     public int totalMobs, mobWaves, initSpawnAmount;
     public GameObject door;
     public bool isCleared = false;
+    int spAmount;
+
+    public Room(XmlNode curRoom)
+    {
+        XmlNode totalSPNode = curRoom.SelectSingleNode("SpawnPoints");
+        spAmount = int.Parse(totalSPNode["TotalSpawnPoints"].InnerText);
+        mobSpawnPoints = new int[spAmount, 2];
+        int i = 0;
+        foreach (XmlNode spawnPointNode in totalSPNode.SelectNodes("SpawnPoint"))
+        {
+            mobSpawnPoints[i, 0] = int.Parse(spawnPointNode["X"].InnerText);
+            mobSpawnPoints[i, 1] = int.Parse(spawnPointNode["Z"].InnerText);
+        }
+    }
 }

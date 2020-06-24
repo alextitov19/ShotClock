@@ -2,6 +2,7 @@
 <RoomList>
 	<Room index="0">
 		<SpawnPoints>
+			<TotalSpawnPoints>4</TotalSpawnPoints>
 			<SpawnPoint index="0">
 				<X>18</X>
 				<Z>22</Z>
