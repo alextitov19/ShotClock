@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using UnityEngine;
 using System.Xml;
+using System.Collections.Generic;
+using System.IO;
 
 public class PlayerScript : MonoBehaviour
 {
@@ -8,6 +10,7 @@ public class PlayerScript : MonoBehaviour
     
     int spawnCounter = 0;
     int amountToSpawn;
+    int totalRooms;
 
     public float fireRate;
     public float weaponRange;
@@ -19,23 +22,42 @@ public class PlayerScript : MonoBehaviour
 
     public Rigidbody playerBody;
     public Camera myCamera;
+    private GameObject door;
 
     private Room currentRoom;
+
+    XmlDocument roomDataXml;
+    XmlNodeList roomNodeList;
+    Room[] roomList;
 
     private void Start()
     {
         Cursor.visible = false;
         InvokeRepeating("SpawnBot", 5.0f, 10.0f);
-        Room room1 = new Room();
-        room1.door = GameObject.Find("Door1");
-        room1.totalMobs = 15;
-        room1.mobWaves = 5;
-        room1.initSpawnAmount = 1;
-        room1.mobSpawnPoints = new int[,] {{18, 22}, {18, -22}, {-18, 22}, {-18, -22}};
+    }
 
-        amountToSpawn = room1.initSpawnAmount;
+    private void Awake()
+    {
+        
+        TextAsset xmlTextAsset = Resources.Load<TextAsset>("roomData");
+        roomDataXml = new XmlDocument();
+        roomDataXml.LoadXml(xmlTextAsset.text);
+        LoadRooms();
+        currentRoom = roomList[0];
+        amountToSpawn = currentRoom.initSpawnAmount;
+        door = GameObject.Find(currentRoom.doorName);
+    }
 
-        currentRoom = room1;
+    private void LoadRooms()
+    {
+        roomNodeList = roomDataXml.SelectNodes("/RoomList/Room");
+        totalRooms = int.Parse(roomDataXml.SelectSingleNode("RoomList")["TotalRooms"].InnerText);
+        roomList = new Room[totalRooms];
+
+        foreach (XmlNode room in roomNodeList)
+        {
+            roomList[int.Parse(room.Attributes["index"].Value)] = new Room(room);
+        }
     }
 
     void Update()
@@ -45,7 +67,7 @@ public class PlayerScript : MonoBehaviour
         {
             currentRoom.isCleared = true;
             Debug.Log("Entered kC = " + Global.killCounter);
-            currentRoom.door.SetActive(false);
+            door.SetActive(false);
             StartCoroutine(RoomCleared());
         }
 
@@ -101,7 +123,7 @@ public class PlayerScript : MonoBehaviour
 
     private void SpawnBot()
     {
-        if (++spawnCounter == currentRoom.mobWaves) 
+        if (++spawnCounter == currentRoom.mobWaves + 1) 
         {
             CancelInvoke("SpawnBot");
         }
@@ -143,20 +165,24 @@ class Room
 {
     public int[,] mobSpawnPoints;
     public int totalMobs, mobWaves, initSpawnAmount;
-    public GameObject door;
+    public string doorName;
     public bool isCleared = false;
     int spAmount;
 
-    public Room(XmlNode curRoom)
+    public Room(XmlNode curRoom)                 //current room is passed in
     {
-        XmlNode totalSPNode = curRoom.SelectSingleNode("SpawnPoints");
-        spAmount = int.Parse(totalSPNode["TotalSpawnPoints"].InnerText);
-        mobSpawnPoints = new int[spAmount, 2];
+        XmlNode spListNode = curRoom.SelectSingleNode("SpawnPointList");  //parent node for all spawnpoints nodes
+        spAmount = int.Parse(spListNode["TotalSpawnPoints"].InnerText);
+        mobSpawnPoints = new int[spAmount, 2];  //start assigning spawnpoints to a 2d integer array
         int i = 0;
-        foreach (XmlNode spawnPointNode in totalSPNode.SelectNodes("SpawnPoint"))
+        foreach (XmlNode spawnPointNode in spListNode.SelectNodes("SpawnPoint"))  //itterate through all spawnpoints for the room
         {
             mobSpawnPoints[i, 0] = int.Parse(spawnPointNode["X"].InnerText);
             mobSpawnPoints[i, 1] = int.Parse(spawnPointNode["Z"].InnerText);
-        }
+            i++;
+        }                                       //spawnpoints assigned
+        totalMobs = int.Parse(curRoom["TotalMobs"].InnerText);  //totalMobs assigned
+        mobWaves = int.Parse(curRoom["MobWaves"].InnerText);  //mobWaves assigned
+        doorName = curRoom["DoorName"].InnerText;  //String for door name used to find the object
     }
 }
