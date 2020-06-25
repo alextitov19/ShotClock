@@ -46,6 +46,7 @@ public class PlayerScript : MonoBehaviour
         currentRoom = roomList[0];
         amountToSpawn = currentRoom.initSpawnAmount;
         door = GameObject.Find(currentRoom.doorName);
+        Debug.Log("Successfully loaded " + roomList.Length + " rooms");
     }
 
     private void LoadRooms()

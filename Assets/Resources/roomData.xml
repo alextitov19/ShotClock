@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <RoomList>
-	<TotalRooms>1</TotalRooms>
+	<TotalRooms>2</TotalRooms>
 	<Room index="0">
 		<SpawnPointList>
 			<TotalSpawnPoints>4</TotalSpawnPoints>
@@ -25,5 +25,38 @@
 		<TotalMobs>15</TotalMobs>
 		<MobWaves>5</MobWaves>
 		<InitSpawnAmount>1</InitSpawnAmount>
+	</Room>
+	<Room index="1">
+		<SpawnPointList>
+			<TotalSpawnPoints>6</TotalSpawnPoints>
+			<SpawnPoint>
+				<X>18</X>
+				<Z>32</Z>
+			</SpawnPoint>
+			<SpawnPoint>
+				<X>18</X>
+				<Z>68</Z>
+			</SpawnPoint>
+			<SpawnPoint>
+				<X>-55</X>
+				<Z>34</Z>
+			</SpawnPoint>
+			<SpawnPoint>
+				<X>-55</X>
+				<Z>96</Z>
+			</SpawnPoint>
+			<SpawnPoint>
+				<X>-10</X>
+				<Z>96</Z>
+			</SpawnPoint>
+			<SpawnPoint>
+				<X>-10</X>
+				<Z>72</Z>
+			</SpawnPoint>
+		</SpawnPointList>
+		<DoorName>Door2</DoorName>
+		<TotalMobs>33</TotalMobs>
+		<MobWaves>6</MobWaves>
+		<InitSpawnAmount>3</InitSpawnAmount>
 	</Room>
 </RoomList>
