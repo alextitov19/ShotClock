@@ -137,6 +137,19 @@ public class PlayerScript : MonoBehaviour
         }
         amountToSpawn++;
     }
+
+    private void SetRoom(int i)
+    {
+        if (roomList[i].isCleared == false)
+        {
+            CancelInvoke("SpawnBot");
+            currentRoom = roomList[i];
+            spawnCounter = 0;
+            amountToSpawn = currentRoom.initSpawnAmount;
+            door = GameObject.Find(currentRoom.doorName);
+            InvokeRepeating("SpawnBot", 5.0f, 10.0f);
+        } 
+    }
         
 
     private void OnCollisionEnter(Collision collision)
@@ -150,6 +163,7 @@ public class PlayerScript : MonoBehaviour
         {
             int doormatRoom = collidedObject.name[7] - '0';
             Debug.Log("--Collided with Doormat, current room = " + doormatRoom);
+            SetRoom(doormatRoom - 1);
         }
     }
 
