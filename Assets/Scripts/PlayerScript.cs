@@ -64,7 +64,7 @@ public class PlayerScript : MonoBehaviour
     void Update()
     {
 
-        if(Global.killCounter == currentRoom.totalMobs && currentRoom.isCleared == false)
+        if(Global.killCounter == currentRoom.totalMobs && currentRoom.isCleared == false)  //current room has just been cleared
         {
             currentRoom.isCleared = true;
             Debug.Log("Entered kC = " + Global.killCounter);
@@ -124,7 +124,7 @@ public class PlayerScript : MonoBehaviour
 
     private void SpawnBot()
     {
-        if (++spawnCounter == currentRoom.mobWaves + 1) 
+        if (++spawnCounter == currentRoom.mobWaves) 
         {
             CancelInvoke("SpawnBot");
         }
@@ -147,6 +147,7 @@ public class PlayerScript : MonoBehaviour
             spawnCounter = 0;
             amountToSpawn = currentRoom.initSpawnAmount;
             door = GameObject.Find(currentRoom.doorName);
+            Global.killCounter = 0;
             InvokeRepeating("SpawnBot", 5.0f, 10.0f);
         } 
     }
@@ -198,6 +199,7 @@ class Room
         }                                       //spawnpoints assigned
         totalMobs = int.Parse(curRoom["TotalMobs"].InnerText);  //totalMobs assigned
         mobWaves = int.Parse(curRoom["MobWaves"].InnerText);  //mobWaves assigned
+        initSpawnAmount = int.Parse(curRoom["InitSpawnAmount"].InnerText);  //initial spawn amount
         doorName = curRoom["DoorName"].InnerText;  //String for door name used to find the object
     }
 }
