@@ -117,10 +117,10 @@ public class PlayerScript : MonoBehaviour
 
         }
 
-        if (Input.GetKey(KeyCode.Escape))
-            Screen.lockCursor = false;
-        else
-            Screen.lockCursor = true;
+       // if (Input.GetKey(KeyCode.Escape))
+       //   Screen.lockCursor = false;
+       // else
+       //     Screen.lockCursor = true;
 
     }
 
