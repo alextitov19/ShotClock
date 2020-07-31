@@ -60,10 +60,14 @@
     <Compile Include="Assets\Scripts\BotScript.cs" />
     <Compile Include="Assets\Scripts\Global.cs" />
     <Compile Include="Assets\Scripts\BulletScript.cs" />
+    <Compile Include="Assets\Scripts\LeftButtonManager.cs" />
+    <Compile Include="Assets\Scripts\RightButtonManager.cs" />
+    <Compile Include="Assets\Scripts\ForwardButtonManager.cs" />
+    <Compile Include="Assets\Scripts\BackwardButtonManager.cs" />
+    <Compile Include="Assets\Scripts\FireButtonManager.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\Resources\roomData.xml" />
-     <None Include="Assets\Skyboxes\SkySerie Freebie\Hdri setup.txt" />
     <Reference Include="UnityEngine">
       <HintPath>E:\Unity\2020.1.0f1\Editor\Data\Managed\UnityEngine\UnityEngine.dll</HintPath>
     </Reference>

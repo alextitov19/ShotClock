@@ -19,12 +19,14 @@ public class PlayerScript : MonoBehaviour
 
     public GameObject botPrefab;
     public GameObject roomClearedUI;
+    public GameObject goldenCoin;
 
     public Rigidbody playerBody;
     public Camera myCamera;
     private GameObject door;
 
     private Room currentRoom;
+
 
     XmlDocument roomDataXml;
     XmlNodeList roomNodeList;
@@ -74,27 +76,27 @@ public class PlayerScript : MonoBehaviour
 
         playerBody.transform.Rotate(0, Input.GetAxis("Mouse X") * Time.deltaTime * rotationSpeed, 0);
 
-        if (Input.GetKey("d"))
+        if (Input.GetKey("d") || RightButtonManager.rightButtonPressed == true)
         {
             playerBody.transform.Translate(movementVector.x * Time.deltaTime, 0, 0);
         }
 
-        if (Input.GetKey("a"))
+        if (Input.GetKey("a") || LeftButtonManager.leftButtonPressed == true)
         {
             playerBody.transform.Translate(-movementVector.x * Time.deltaTime, 0, 0);
         }
 
-        if (Input.GetKey("w"))
+        if (Input.GetKey("w") || ForwardButtonManager.forwardButtonPressed == true)
         {
             playerBody.transform.Translate(0, 0, movementVector.z * Time.deltaTime);
         }
 
-        if (Input.GetKey("s"))
+        if (Input.GetKey("s") || BackwardButtonManager.backwardButtonPressed == true)
         {
             playerBody.transform.Translate(0, 0, -movementVector.z * Time.deltaTime);
         }
 
-        if (Input.GetMouseButtonDown(0) && Time.time > nextFire)
+        if ((Input.GetMouseButtonDown(0) || FireButtonManager.fireButtonPressed == true) && Time.time > nextFire)
         {
             Debug.Log("Pressed primary button.");
             nextFire = Time.time + fireRate;
